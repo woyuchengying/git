@@ -101,6 +101,7 @@
     systemctl start kube-apiserver
     systemctl start kube-scheduler
     systemctl start kube-controller-manager
+    systemctl start flannel
 ### 启动slave
     systemctl start kube-proxy
     systemctl start kubelet
