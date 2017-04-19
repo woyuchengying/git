@@ -1,4 +1,4 @@
-        global  
+    global  
     chroot /usr/local/etc/haproxy  
     daemon  
     nbproc 1  
