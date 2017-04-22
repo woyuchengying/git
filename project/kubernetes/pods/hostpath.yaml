@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: test-hostpath
+    role: master
+  name: test-hostpath
+spec:
+  containers:
+    - name: test-hostpath
+      image: 20.26.25.188:80/yls/tomcat8_jdk7:y1.0
+      env:
+      - name: MARATHON_APP_ID
+        value: /tomcat-web
+      - name: JAVA_HOME
+        value: /app/jdk
+      ports:
+      - containerPort: 8080
+      volumeMounts:
+       - name: dcos
+         mountPath: /app/app
+       - name: logs
+         mountPath: /app/logs
+      command:
+      - /app/tomcat/bin/startup.sh
+  volumes:
+  - name: dcos
+    hostPath:
+     path: /data/dcos/demo
+  - name: logs
+    hostPath:
+     path: /data/logs/demo
