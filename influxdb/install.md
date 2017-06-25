@@ -1,6 +1,7 @@
 ## 参考文档
     https://github.com/xwisen/ltw/issues/26
     https://github.com/xwisen/ltw/issues/30
+    https://docs.influxdata.com/influxdb/v1.2/
 ## 安装influxdb
     下载页面:https://portal.influxdata.com/downloads
     tar zxvf influxdb-1.2.4_linux_amd64.tar.gz -C /usr/local/ && mv /usr/local/influxdb-1.2.4-1 /usr/local/influxdb
