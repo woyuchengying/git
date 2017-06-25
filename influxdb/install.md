@@ -78,22 +78,22 @@
 ### 配置节点一
 #### vi /etc/keepalived/keepalived.conf
     vrrp_script chk_influxd115 {
-            script "/etc/keepalived/chk_influxd115.sh"    #服务探测，返回0说明服务是正常的
-            interval 1    #每隔1秒探测一次
-            weight -2      #权重
+            script "/etc/keepalived/chk_influxd115.sh"
+            interval 1   
+            weight -2    
     }
     vrrp_script chk_influxd116 {
-            script "/etc/keepalived/chk_influxd116.sh"    #服务探测，返回0说明服务是正常的
-            interval 1    #每隔1秒探测一次
-            weight -2      #权重
+            script "/etc/keepalived/chk_influxd116.sh"  
+            interval 1   
+            weight -2    
     }
-    # 第一个实例
+   
     vrrp_instance VI_1 {
         state MASTER
-        interface eno16777984	#使用的网卡名称
-        virtual_router_id 100    #虚拟路由id，处于同一keepalived必须保证一致
+        interface eno16777984	
+        virtual_router_id 100   
         garp_master_delay 1
-        priority 100	#优先级，越大越优先
+        priority 100	
         advert_int 1
         authentication {
             auth_type PASS
@@ -101,24 +101,23 @@
         }
     #
         virtual_ipaddress {
-        20.26.25.240/24 dev eno16777984    #虚IP
+        20.26.25.240/24 dev eno16777984   
         }
         track_interface {
             eno16777984
         }
     #
-        track_script {        #脚本追踪
+        track_script {     
             chk_influxd115
         }
     }
 
-    #第二个实例
     vrrp_instance VI_2 {
         state BACKUP
-        interface eno16777984	#使用的网卡名称
-        virtual_router_id 200    #虚拟路由id，处于同一keepalived必须保证一致
+        interface eno16777984	
+        virtual_router_id 200   
         garp_master_delay 1
-        priority 99	#优先级，越大越优先
+        priority 99	
         advert_int 1
         authentication {
             auth_type PASS
@@ -126,35 +125,35 @@
         }
     #
         virtual_ipaddress {
-            20.26.25.241/24 dev eno16777984    #虚IP
+            20.26.25.241/24 dev eno16777984   
         }
         track_interface {
             eno16777984
         }
     #
-        track_script {        #脚本追踪
+        track_script {     
             chk_influxd115
         }
     }
 ### 配置节点二
 #### vi /etc/keepalived/keepalived.conf
     vrrp_script chk_influxd115 {
-            script "/etc/keepalived/chk_influxd115.sh"    #服务探测，返回0说明服务是正常的
-            interval 1    #每隔1秒探测一次
-            weight -2      #权重
+            script "/etc/keepalived/chk_influxd115.sh"  
+            interval 1   
+            weight -2     
     }
     vrrp_script chk_influxd116 {
-            script "/etc/keepalived/chk_influxd116.sh"    #服务探测，返回0说明服务是正常的
-            interval 1    #每隔1秒探测一次
-            weight -2      #权重
+            script "/etc/keepalived/chk_influxd116.sh"   
+            interval 1   
+            weight -2    
     }
-    # 第一个实例
+    
     vrrp_instance VI_1 {
         state BACKUP
-        interface eno16777984	#使用的网卡名称
-        virtual_router_id 100    #虚拟路由id，处于同一keepalived必须保证一致
+        interface eno16777984	
+        virtual_router_id 100   
         garp_master_delay 1
-        priority 99	#优先级，越大越优先
+        priority 99	
         advert_int 1
         authentication {
             auth_type PASS
@@ -162,24 +161,23 @@
         }
     #
         virtual_ipaddress {
-            20.26.25.240/24 dev eno16777984    #虚IP
+            20.26.25.240/24 dev eno16777984  
         }
         track_interface {
             eno16777984
         }
     #
-        track_script {        #脚本追踪
+        track_script {      
             chk_influxd116
         }
     }
 
-    #第二个实例
     vrrp_instance VI_2 {
         state MASTER
-        interface eno16777984	#使用的网卡名称
-        virtual_router_id 200    #虚拟路由id，处于同一keepalived必须保证一致
+        interface eno16777984	
+        virtual_router_id 200    
         garp_master_delay 1
-        priority 100	#优先级，越大越优先
+        priority 100	
         advert_int 1
         authentication {
             auth_type PASS
@@ -187,13 +185,13 @@
         }
     #
         virtual_ipaddress {
-            20.26.25.241/24 dev eno16777984    #虚IP
+            20.26.25.241/24 dev eno16777984  
         }
         track_interface {
             eno16777984
         }
     #
-        track_script {        #脚本追踪
+        track_script {       
             chk_influxd116
         }
     }
