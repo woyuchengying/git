@@ -4,22 +4,20 @@
 ## Prerequisites
     yum -y install java-1.8.0-openjdk-headless.x86_64
 ## Install MongoDB
-vi /etc/yum.repos.d/mongodb-org-3.2.repo  
-
+#### vi /etc/yum.repos.d/mongodb-org-3.2.repo  
     [mongodb-org-3.2]
     name=MongoDB Repository
     baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.2/x86_64/
     gpgcheck=1
     enabled=1
     gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
-开机自起
+#### 开机自起
     chkconfig --add mongod
     systemctl daemon-reload
     systemctl enable mongod.service
     systemctl start mongod.service
 ## Install Elasticsearch
-vi /etc/yum.repos.d/elasticsearch.repo  
-
+#### vi /etc/yum.repos.d/elasticsearch.repo  
     [elasticsearch-2.x]
     name=Elasticsearch repository for 2.x packages
     baseurl=https://packages.elastic.co/elasticsearch/2.x/centos
@@ -27,7 +25,7 @@ vi /etc/yum.repos.d/elasticsearch.repo
     gpgkey=https://packages.elastic.co/GPG-KEY-elasticsearch
     enabled=1
 
-开机自起
+#### 开机自起
     chkconfig --add elasticsearch
     systemctl daemon-reload
     systemctl enable elasticsearch.service
@@ -35,24 +33,22 @@ vi /etc/yum.repos.d/elasticsearch.repo
 ## Install Graylog
     rpm -Uvh https://packages.graylog2.org/repo/packages/graylog-2.2-repository_latest.rpm
     yum -y install graylog-server
-开机自起
+#### 开机自起
     chkconfig --add graylog-server
     systemctl daemon-reload
     systemctl enable graylog-server.service
     systemctl start graylog-server.service
 ## 配置
-vi /etc/mongod.conf  
-
+#### vi /etc/mongod.conf  
     bindIp: 127.0.0.1 改成 bindIp: 0.0.0.0
-vi /etc/elasticsearch/elasticsearch.yml 其他2台只需修改node.name,network.host  
-
+#### vi /etc/elasticsearch/elasticsearch.yml 其他2台只需修改node.name,network.host  
     cluster.name: zmcc
     node.name: node1
     bootstrap.memory_lock: true
     network.host: 20.26.25.114
     discovery.zen.ping.unicast.hosts: ["20.26.25.114", "20.26.25.115","20.26.25.116"]
     discovery.zen.minimum_master_nodes: 1
-测试elasticsearch
+#### 测试elasticsearch
     http://20.26.25.114:9200/_cluster/health?pretty=true
 #### 创建root_password_sha2
     yum install pwgen -y
@@ -60,8 +56,7 @@ vi /etc/elasticsearch/elasticsearch.yml 其他2台只需修改node.name,network.
         O7EgvdkiwBA1GpSmtBoXH2d1kbXeYS5uNatihwG1t3kzo5PlBy97riywua6Q2SHIJwhGL5uV7gK8ovLTx76izLKvftNJjWSh
     echo -n admin | sha256sum
         8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918 -
-vi /etc/graylog/server/server.conf 其他主机server.conf中is_master = false  
-
+#### vi /etc/graylog/server/server.conf 其他主机server.conf中is_master = false  
     is_master = true
     node_id_file = /etc/graylog/server/node-id
     password_secret = VfjfxoqopSIKGq5kdcp5uSsDaUKEkIlfz82s96XjCeD9K8H0vamK2dZiPU9Kke7L
@@ -131,8 +126,7 @@ vi /etc/graylog/server/server.conf 其他主机server.conf中is_master = false
     graylogweb界面配置input,选择udp
 ## 配置主机logstash
     wget https://download.elasticsearch.org/logstash/logstash/logstash-2.1.0.tar.gz && tar zxvf logstash-2.1.0.tar.gz -C /opt/
-vi /etc/logstash/conf.d/devops.conf  
-
+#### vi /etc/logstash/conf.d/devops.conf  
     input {
         heartbeat {
             interval => 10
@@ -159,7 +153,6 @@ vi /etc/logstash/conf.d/devops.conf
             facility => "%{type}"
         }
     }
-vi start_logstash.sh  
-
+#### vi start_logstash.sh  
     nohup /opt/logstash/bin/logstash -f /etc/logstash/conf.d/devops.conf  &>/dev/null &
     nohup /opt/logstash/bin/logstash -f /etc/logstash/conf.d/  &>/dev/null &
