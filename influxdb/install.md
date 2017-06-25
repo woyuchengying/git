@@ -69,7 +69,7 @@
     curl -i -XPOST 'http://20.26.25.115:9096/write?db=test' --data-binary 'cpu_load_short,host=server11,region=us-west value=0.64'
     curl -i -XPOST 'http://20.26.25.116:9096/write?db=test' --data-binary 'cpu_load_short,host=influxdb11,region=yaolisong value=0.55'
     访问influxdb页面,查询两个influxdb数据库相关数据是否一致:
-    http://20.26.25.115:8083/ 以及 http://20.26.25.116:8086/ 
+    http://20.26.25.115:8083/ 以及 http://20.26.25.116:8083/ 
     select * from cpu_load_short
 ## 安装配置keepalived
     yum install -y keepalived
@@ -195,3 +195,9 @@
             chk_influxd116
         }
     }
+#### 启动服务并测试
+    systemctl start keepalived.service 节点一和节点二
+    curl -i -XPOST 'http://20.26.25.240:9096/write?db=test' --data-binary 'cpu_load_short,host=keepalived01,region=keepablived value=0.88'
+    访问influxdb页面,查询两个influxdb数据库相关数据是否一致:
+    http://20.26.25.115:8083/ 以及 http://20.26.25.116:8083/ 
+    select * from cpu_load_short
