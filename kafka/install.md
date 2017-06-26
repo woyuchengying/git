@@ -23,8 +23,12 @@
 ## Install kafka-manager
     wget https://github.com/yahoo/kafka-manager/archive/1.3.3.7.tar.gz && tar zxvf 1.3.3.7.tar.gz -C /root
     wget http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz && tar zxvf jdk-8u131-linux-x64.tar.gz -C /opt
+#### 下载kafka-manager二进制文件
     /root/kafka-manager-1.3.3.7/sbt -java-home /opt/jdk1.8.0_131 clean dist
     cd /root/kafka-manager-1.3.3.7/target/universal && unzip kafka-manager-1.3.3.7.zip && mv kafka-manager-1.3.3.7 /usr/local/kafka-manager
+#### vi /usr/local/kafka-manager/conf/application.conf 修改
+    kafka-manager.zkhosts="192.168.25.114:2181,192.168.25.115:2181,192.168.25.116:2181"
+#### 启动
     nohup /usr/local/kafka-manager/bin/kafka-manager -Dconfig.file=/usr/local/kafka-manager/conf/application.conf -Dhttp.port=9090 &
 #### 访问
     http://ip:9090
