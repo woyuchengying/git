@@ -3,8 +3,8 @@
     http://blog.csdn.net/lizhitao/article/details/25667831
 ## Install zookeeper
     docker run -d --restart always --name zk1  --net=host -e ZOO_MY_ID=1 -e ZOO_SERVERS="server.1=192.168.25.114:2888:3888 server.2=192.168.25.115:2888:3888 server.3=192.168.25.116:2888:3888" 192.168.25.188:80/dcos/zookeeper
-    docker run -d --restart always --name zk1  --net=host -e ZOO_MY_ID=2 -e ZOO_SERVERS="server.1=192.168.25.114:2888:3888 server.2=192.168.25.115:2888:3888 server.3=192.168.25.116:2888:3888" 192.168.25.188:80/dcos/zookeeper
-    docker run -d --restart always --name zk1  --net=host -e ZOO_MY_ID=3 -e ZOO_SERVERS="server.1=192.168.25.114:2888:3888 server.2=192.168.25.115:2888:3888 server.3=192.168.25.116:2888:3888" 192.168.25.188:80/dcos/zookeeper
+    docker run -d --restart always --name zk2  --net=host -e ZOO_MY_ID=2 -e ZOO_SERVERS="server.1=192.168.25.114:2888:3888 server.2=192.168.25.115:2888:3888 server.3=192.168.25.116:2888:3888" 192.168.25.188:80/dcos/zookeeper
+    docker run -d --restart always --name zk3  --net=host -e ZOO_MY_ID=3 -e ZOO_SERVERS="server.1=192.168.25.114:2888:3888 server.2=192.168.25.115:2888:3888 server.3=192.168.25.116:2888:3888" 192.168.25.188:80/dcos/zookeeper
 ## Install kafka
     yum -y install java-1.8.0
     wget https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/0.10.0.1/kafka_2.10-0.10.0.1.tgz && tar zxvf kafka_2.10-0.10.0.1.tgz -C /usr/local && mv /usr/local/kafka_2.10-0.10.0.1 /usr/local
