@@ -12,7 +12,7 @@
     cp -r redis7000 redis7001 && cp -r redis7000 redis7002 && cp -r redis7000 redis7003 && cp -r redis7000 redis7004 && cp -r redis7000 redis7005
 #### vi /usr/local/redis/redis7000/conf/redis.conf 修改
     port 7000                               各个节点不相同
-    bind 192.168.25.182                       相同
+    bind 192.168.25.182                     相同
     cluster-enabled yes                     相同
     cluster-config-file nodes-7000.conf     各个节点不相同
     pidfile /var/run/redis_7000.pid         各个节点不相同
