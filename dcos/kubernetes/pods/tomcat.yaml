@@ -1,0 +1,13 @@
+# Copy of pod.yaml without file extension for test
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tomcat
+  labels:
+    name: tomcat
+spec:
+  containers:
+  - name: nginx
+    image: 20.26.25.187:80/dcos/tomcat
+    ports:
+    - containerPort: 8080
