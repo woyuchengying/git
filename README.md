@@ -2,6 +2,13 @@
 ## 告警,日志,监控
     在用:icinga,graylog,open-falcon
     未用:zabbix,kibana
+# 容器云平台
+## mesos框架
+    zookeeper,mesos-master,mesos-slave,marathon,haproxy,bamboo,docker
+## kubernetes框架
+    etcd,flannel,kube-apiserver,kube-scheduler,kube-controller-manager,kube-proxy,kubelet,docker
+## docker swarm框架
+    待学
 # 开发
 ## 开发语言
     python,go
