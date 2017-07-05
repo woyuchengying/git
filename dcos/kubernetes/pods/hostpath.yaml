@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: test-hostpath
-      image: 20.26.25.188:80/yls/tomcat8_jdk7:y1.0
+      image: 192.168.25.188:80/yls/tomcat8_jdk7:y1.0
       env:
       - name: MARATHON_APP_ID
         value: /tomcat-web

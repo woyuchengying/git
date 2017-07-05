@@ -38,8 +38,8 @@
 #### 测试,两台主机配置一样
     sh start_influxdb.sh    启动
     访问并且创建数据库test:
-    http://20.26.25.115:8083/  
-    http://20.26.25.116:8083/   
+    http://192.168.25.115:8083/  
+    http://192.168.25.116:8083/   
 ## 安装influxdb-relay
     yum -y install go
     export GOPATH=/usr/local/go
@@ -51,8 +51,8 @@
     name = "example-http"
     bind-addr = "0.0.0.0:9096"
     output = [
-        { name="influxdb1", location = "http://20.26.25.115:8086/write",timeout="10s",buffer-size-mb=256,max-batch-kb=256,max-delay-interval="500ms" },
-        { name="influxdb2", location = "http://20.26.25.116:8086/write",timeout="10s",buffer-size-mb=256,max-batch-kb=256,max-delay-interval="500ms" },
+        { name="influxdb1", location = "http://192.168.25.115:8086/write",timeout="10s",buffer-size-mb=256,max-batch-kb=256,max-delay-interval="500ms" },
+        { name="influxdb2", location = "http://192.168.25.116:8086/write",timeout="10s",buffer-size-mb=256,max-batch-kb=256,max-delay-interval="500ms" },
     ]
 
     [[udp]]
@@ -60,22 +60,22 @@
     bind-addr = "0.0.0.0:9096"
     read-buffer = 0 # default
     output = [
-        { name="influxdb1", location="20.26.25.115:8089", mtu=512 },
-        { name="influxdb2", location="20.26.25.116:8089", mtu=1024 },
+        { name="influxdb1", location="192.168.25.115:8089", mtu=512 },
+        { name="influxdb2", location="192.168.25.116:8089", mtu=1024 },
     ]
 #### vi start_influxdb_relay.sh
     nohup /usr/local/influxdb/influxdb-relay -config /usr/local/influxdb/relay.toml &
 #### 测试,两台主机配置一样
     sh start_influxdb_relay.sh
-    curl -i -XPOST 'http://20.26.25.115:9096/write?db=test' --data-binary 'cpu_load_short,host=server11,region=us-west value=0.64'
-    curl -i -XPOST 'http://20.26.25.116:9096/write?db=test' --data-binary 'cpu_load_short,host=influxdb11,region=yaolisong value=0.55'
+    curl -i -XPOST 'http://192.168.25.115:9096/write?db=test' --data-binary 'cpu_load_short,host=server11,region=us-west value=0.64'
+    curl -i -XPOST 'http://192.168.25.116:9096/write?db=test' --data-binary 'cpu_load_short,host=influxdb11,region=yaolisong value=0.55'
     访问influxdb页面,查询两个influxdb数据库相关数据是否一致:
-    http://20.26.25.115:8083/ 以及 http://20.26.25.116:8083/ 
+    http://192.168.25.115:8083/ 以及 http://192.168.25.116:8083/ 
     select * from cpu_load_short
 ## 安装配置keepalived
     yum install -y keepalived
-    echo "curl http://20.26.25.115:8086/ping" >> /etc/keepalived/chk_influxd115.sh
-    echo "curl http://20.26.25.116:8086/ping" >> /etc/keepalived/chk_influxd116.sh
+    echo "curl http://192.168.25.115:8086/ping" >> /etc/keepalived/chk_influxd115.sh
+    echo "curl http://192.168.25.116:8086/ping" >> /etc/keepalived/chk_influxd116.sh
 ### 配置节点一
 #### vi /etc/keepalived/keepalived.conf
     vrrp_script chk_influxd115 {
@@ -102,7 +102,7 @@
         }
     #
         virtual_ipaddress {
-        20.26.25.240/24 dev eno16777984   
+        192.168.25.240/24 dev eno16777984   
         }
         track_interface {
             eno16777984
@@ -126,7 +126,7 @@
         }
     #
         virtual_ipaddress {
-            20.26.25.241/24 dev eno16777984   
+            192.168.25.241/24 dev eno16777984   
         }
         track_interface {
             eno16777984
@@ -162,7 +162,7 @@
         }
     #
         virtual_ipaddress {
-            20.26.25.240/24 dev eno16777984  
+            192.168.25.240/24 dev eno16777984  
         }
         track_interface {
             eno16777984
@@ -186,7 +186,7 @@
         }
     #
         virtual_ipaddress {
-            20.26.25.241/24 dev eno16777984  
+            192.168.25.241/24 dev eno16777984  
         }
         track_interface {
             eno16777984
@@ -198,7 +198,7 @@
     }
 #### 启动服务并测试
     systemctl start keepalived.service 节点一和节点二
-    curl -i -XPOST 'http://20.26.25.240:9096/write?db=test' --data-binary 'cpu_load_short,host=keepalived01,region=keepablived value=0.88'
+    curl -i -XPOST 'http://192.168.25.240:9096/write?db=test' --data-binary 'cpu_load_short,host=keepalived01,region=keepablived value=0.88'
     访问influxdb页面,查询两个influxdb数据库相关数据是否一致:
-    http://20.26.25.115:8083/ 以及 http://20.26.25.116:8083/ 
+    http://192.168.25.115:8083/ 以及 http://192.168.25.116:8083/ 
     select * from cpu_load_short

@@ -38,7 +38,7 @@ items:
       spec:
         containers:
         - name: kubernetes-dashboard
-          image: 20.26.25.187:80/google_containers/kubernetes-dashboard-amd64:v1.4.0
+          image: 192.168.25.187:80/google_containers/kubernetes-dashboard-amd64:v1.4.0
           imagePullPolicy: Always
           ports:
           - containerPort: 9090
@@ -47,7 +47,7 @@ items:
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
             # to it. Uncomment only if the default does not work.
-            - --apiserver-host=http://20.26.25.187:8080
+            - --apiserver-host=http://192.168.25.187:8080
           livenessProbe:
             httpGet:
               path: /

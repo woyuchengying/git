@@ -9,11 +9,11 @@
     tar zxvf flannel-0.5.5-linux-amd64.tar.gz && cp flannel-0.5.5/flanneld /opt/kubernetes/bin/flanneld-0.5.5
 ### 下载kubernetes/pause镜像
     docker pull kubernetes/pause
-    docker tag docker.io/kubernetes/pause 20.26.25.187:5000/google_containers/pause:latest
+    docker tag docker.io/kubernetes/pause 192.168.25.187:5000/google_containers/pause:latest
 ### 下载registry镜像
     docker pull registry:2.2.0
     docker run -d -p 5000:5000 -v /data/registry_v2:/tmp/registry:rw registry:2.2.0
-    docker push 20.26.25.187:5000/google_containers/pause:latest
+    docker push 192.168.25.187:5000/google_containers/pause:latest
 ### 下载dashboard镜像   
     1)docker pull index.tenxcloud.com/google_containers/kubernetes-dashboard-amd64:v1.1.0
     2)相关goole镜像下载地址 https://hub.tenxcloud.com/repos/
@@ -36,7 +36,7 @@
     After=etcd.service
     Requires=etcd.service
     [Service]
-    ExecStart=/opt/kubernetes/bin/kube-apiserver --logtostderr=true --insecure-bind-address=20.26.25.187 --insecure-port=8080 --bind-address=20.26.25.187 --secure-port=6443 --cors-allowed-origins=.* --etcd-servers=http://127.0.0.1:4001 --service-cluster-ip-range=10.168.0.0/16
+    ExecStart=/opt/kubernetes/bin/kube-apiserver --logtostderr=true --insecure-bind-address=192.168.25.187 --insecure-port=8080 --bind-address=192.168.25.187 --secure-port=6443 --cors-allowed-origins=.* --etcd-servers=http://127.0.0.1:4001 --service-cluster-ip-range=10.168.0.0/16
     Restart=on-failure
     [Install]
     WantedBy=multi-user.target
@@ -47,7 +47,7 @@
     After=etcd.service
     Requires=etcd.service kube-apiserver.service
     [Service]
-    ExecStart=/opt/kubernetes/bin/kube-scheduler --logtostderr=true --master=20.26.25.187:8080
+    ExecStart=/opt/kubernetes/bin/kube-scheduler --logtostderr=true --master=192.168.25.187:8080
     Restart=on-failure
     [Install]
     WantedBy=multi-user.target
@@ -58,7 +58,7 @@
     After=etcd.service 
     Requires=etcd.service kube-apiserver.service
     [Service]
-    ExecStart=/opt/kubernetes/bin/kube-controller-manager --logtostderr=true --master=20.26.25.187:8080 --cluster-name=dnt-k8s
+    ExecStart=/opt/kubernetes/bin/kube-controller-manager --logtostderr=true --master=192.168.25.187:8080 --cluster-name=dnt-k8s
     Restart=on-failure
     [Install]
     WantedBy=multi-user.target
@@ -67,7 +67,7 @@
     Description=Kubernetes Proxy
     After=network.target
     [Service]
-    ExecStart=/opt/kubernetes/bin/kube-proxy --logtostderr=true --master=http://20.26.25.187:8080
+    ExecStart=/opt/kubernetes/bin/kube-proxy --logtostderr=true --master=http://192.168.25.187:8080
     Restart=on-failure
     [Install]
     WantedBy=multi-user.target
@@ -77,7 +77,7 @@
     After=docker.service
     Requires=docker.service
     [Service]
-    ExecStart=/opt/kubernetes/bin/kubelet --logtostderr=true --address=0.0.0.0 --port=10250  --cluster-dns=223.5.5.5 --cluster-domain=cluster.local --pod-infra-container-image=20.26.25.187:5000/google_containers/pause:latest --runtime-cgroups=/docker-daemon --api-servers=http://20.26.25.187:8080
+    ExecStart=/opt/kubernetes/bin/kubelet --logtostderr=true --address=0.0.0.0 --port=10250  --cluster-dns=223.5.5.5 --cluster-domain=cluster.local --pod-infra-container-image=192.168.25.187:5000/google_containers/pause:latest --runtime-cgroups=/docker-daemon --api-servers=http://192.168.25.187:8080
     Restart=on-failure
     KillMode=process
     [Install]
@@ -88,7 +88,7 @@
     After=network.target
     Before=docker.service
     [Service]
-    ExecStart=/opt/kubernetes/bin/flannel-0.5.5 --iface=eno16777984 --ip-masq --etcd-endpoints=http://20.26.25.187:4001 --etcd-prefix=/dnt/network
+    ExecStart=/opt/kubernetes/bin/flannel-0.5.5 --iface=eno16777984 --ip-masq --etcd-endpoints=http://192.168.25.187:4001 --etcd-prefix=/dnt/network
     Type=notify
     [Install]
     WantedBy=multi-user.target

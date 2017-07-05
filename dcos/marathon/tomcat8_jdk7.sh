@@ -1,4 +1,4 @@
-curl -u dcosadmin:zjdcos01 -v -X POST http://20.26.25.188:8081/v2/apps \
+curl -u dcosadmin:zjdcos01 -v -X POST http://192.168.25.188:8081/v2/apps \
     -H Content-Type:application/json -d '{
     "cmd":"sh /app/tomcat/bin/startup.sh",
     "id":"/tomcat/tomcat8-jdk7",
@@ -7,7 +7,7 @@ curl -u dcosadmin:zjdcos01 -v -X POST http://20.26.25.188:8081/v2/apps \
     "type": "DOCKER",
     "docker":
         {
-            "image": "20.26.25.10:5000/tomcat8_jdk7:latest",
+            "image": "192.168.25.10:5000/tomcat8_jdk7:latest",
             "network": "BRIDGE",
             "portMappings": 
             [
@@ -52,7 +52,7 @@ curl -u dcosadmin:zjdcos01 -v -X POST http://20.26.25.188:8081/v2/apps \
     "mem": 2500.0,
     "disk": 3000,
     "instances": 0,
-    "constraints": [["hostname", "CLUSTER", "20.26.25.188"]],
+    "constraints": [["hostname", "CLUSTER", "192.168.25.188"]],
     "healthChecks": 
         [
             {

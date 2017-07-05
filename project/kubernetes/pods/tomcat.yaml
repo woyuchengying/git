@@ -8,6 +8,6 @@ metadata:
 spec:
   containers:
   - name: nginx
-    image: 20.26.25.187:80/dcos/tomcat
+    image: 192.168.25.187:80/dcos/tomcat
     ports:
     - containerPort: 8080

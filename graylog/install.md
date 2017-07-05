@@ -45,11 +45,11 @@
     cluster.name: zmcc
     node.name: node1
     bootstrap.memory_lock: true
-    network.host: 20.26.25.114
-    discovery.zen.ping.unicast.hosts: ["20.26.25.114", "20.26.25.115","20.26.25.116"]
+    network.host: 192.168.25.114
+    discovery.zen.ping.unicast.hosts: ["192.168.25.114", "192.168.25.115","192.168.25.116"]
     discovery.zen.minimum_master_nodes: 1
 #### 测试elasticsearch
-    http://20.26.25.114:9200/_cluster/health?pretty=true
+    http://192.168.25.114:9200/_cluster/health?pretty=true
 #### 创建root_password_sha2
     yum install pwgen -y
     pwgen -N 1 -s 96
@@ -63,8 +63,8 @@
     root_password_sha2 = 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
     root_timezone = Asia/Shanghai 
     plugin_dir = /usr/share/graylog-server/plugin
-    rest_listen_uri = http://20.26.25.114:12900/
-    rest_transport_uri = http://20.26.25.114:12900/
+    rest_listen_uri = http://192.168.25.114:12900/
+    rest_transport_uri = http://192.168.25.114:12900/
     web_enable = true
     web_listen_uri = http://0.0.0.0:8080
     web_enable_cors = true
@@ -83,13 +83,13 @@
     allow_highlighting = true
     elasticsearch_cluster_name = zmcc
     elasticsearch_discovery_zen_ping_multicast_enabled = false
-    elasticsearch_discovery_zen_ping_unicast_hosts = 20.26.25.114:9300,20.26.25.115:9300,20.26.25.116:9300
+    elasticsearch_discovery_zen_ping_unicast_hosts = 192.168.25.114:9300,192.168.25.115:9300,192.168.25.116:9300
     elasticsearch_node_master = false
     elasticsearch_node_data = false
     elasticsearch_transport_tcp_port = 9350
     elasticsearch_http_enabled = false
     elasticsearch_discovery_zen_ping_multicast_enabled = false
-    elasticsearch_network_host = 20.26.25.114
+    elasticsearch_network_host = 192.168.25.114
     elasticsearch_analyzer = standard
     output_batch_size = 500
     output_flush_interval = 1
@@ -112,7 +112,7 @@
     lb_recognition_period_seconds = 3
     stream_processing_timeout = 20000
     stream_processing_max_faults = 6
-    mongodb_uri = mongodb://20.26.25.114:27017/graylog
+    mongodb_uri = mongodb://192.168.25.114:27017/graylog
     mongodb_max_connections = 1000
     mongodb_threads_allowed_to_block_multiplier =50
     http_connect_timeout = 50s
@@ -122,7 +122,7 @@
     content_packs_auto_load = grok-patterns.json
 
 ## 访问
-    http://20.26.25.114:8080/
+    http://192.168.25.114:8080/
     graylogweb界面配置input,选择udp
 ## 配置主机logstash
     wget https://download.elasticsearch.org/logstash/logstash/logstash-2.1.0.tar.gz && tar zxvf logstash-2.1.0.tar.gz -C /opt/
@@ -148,7 +148,7 @@
 
     output {
         gelf {
-            host => "20.26.25.114"
+            host => "192.168.25.114"
             port => "12201"
             facility => "%{type}"
         }
