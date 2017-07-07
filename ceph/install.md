@@ -45,7 +45,7 @@
     [global]
     fsid = c5836faa-1dca-4de5-8671-9a7a49559571
     mon_initial_members = csv-dcos36, csv-dcos37, csv-dcos38
-    mon_host = 20.26.25.114,20.26.25.115,20.26.25.116
+    mon_host = 192.168.25.114,192.168.25.115,192.168.25.116
     auth_cluster_required = cephx
     auth_service_required = cephx
     auth_client_required = cephx
