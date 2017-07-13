@@ -32,3 +32,5 @@
     yaolisong
     curl http://192.168.25.114:2379/v2/keys/test/etcd/name
     {"action":"get","node":{"key":"/test/etcd/name","value":"yaolisong","modifiedIndex":12,"createdIndex":12}}
+    curl http://192.168.25.114:2379/v2/members/leader
+    {"id":"8d7ed7207742a6fb","name":"my-etcd-3","peerURLs":["http://192.168.25.116:2380"],"clientURLs":["http://192.168.25.116:2379"]}
