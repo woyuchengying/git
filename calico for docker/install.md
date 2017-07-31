@@ -1,7 +1,7 @@
 ## 对docker.service配置文件添加配置
-    --cluster-store=etcd://20.26.25.11:2379
+    --cluster-store=etcd://192.168.25.11:2379
 ## 下载镜像并启动
-    docker pull quay.io/calico/node:latest && docker tag quay.io/calico/node:latest 20.26.25.188:80/calico/node:latest
+    docker pull quay.io/calico/node:latest && docker tag quay.io/calico/node:latest 192.168.25.188:80/calico/node:latest
     cat > /etc/calico/calicoctl.cfg << EOF
     apiVersion: v1
     kind: calicoApiConfig
@@ -10,9 +10,9 @@
     datastoreType: "etcdv2"
     etcdEndpoints: "http://192.168.5.21:2379"
     EOF
-    ETCD_ENDPOINTS=http://20.26.25.11:2379 calicoctl node run --ip 20.26.25.114 --node-image=20.26.25.188:80/calico/node:latest
-    ETCD_ENDPOINTS=http://20.26.25.11:2379 calicoctl node status
-    cat << EOF | ETCD_ENDPOINTS=http://20.26.25.11:2379 calicoctl create -f -
+    ETCD_ENDPOINTS=http://192.168.25.11:2379 calicoctl node run --ip 192.168.25.114 --node-image=192.168.25.188:80/calico/node:latest
+    ETCD_ENDPOINTS=http://192.168.25.11:2379 calicoctl node status
+    cat << EOF | ETCD_ENDPOINTS=http://192.168.25.11:2379 calicoctl create -f -
     apiVersion: v1
     kind: ipPool
     metadata:
@@ -23,7 +23,7 @@
         nat-outgoing: true
         disabled: false
     EOF
-    cat << EOF | ETCD_ENDPOINTS=http://20.26.25.11:2379 calicoctl create -f -
+    cat << EOF | ETCD_ENDPOINTS=http://192.168.25.11:2379 calicoctl create -f -
     apiVersion: v1
     kind: ipPool
     metadata:
