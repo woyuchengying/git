@@ -1,5 +1,6 @@
 ## 参考文档
     https://linux.cn/article-8695-1.html
+    http://hadoop.apache.org/docs/r1.0.4/cn/
 ## 节点机器配置,并配置好hadoop用户ssh互信
     20.26.25.114 centos7.0 csv-dcos36(namenode)
     20.26.25.115 centos7.0 csv-dcos37(datanode1)
