@@ -1,6 +1,6 @@
 ## 参考文档
     https://linux.cn/article-8695-1.html
-## 节点机器配置,并配置好  ssh互信
+## 节点机器配置,并配置好hadoop用户ssh互信
     20.26.25.114 centos7.0 csv-dcos36(namenode)
     20.26.25.115 centos7.0 csv-dcos37(datanode1)
     20.26.25.116 centos7.0 csv-dcos38(datanode2)
@@ -49,7 +49,7 @@
         <property>
             <description>默认文件系统及端口</description> 
             <name>fs.defaultFS</name>
-            <value>hdfs://namenode/</value>
+            <value>hdfs://csv-dcos36/</value>
             <final>true</final>
         </property>
     </configuration>
@@ -61,13 +61,13 @@
         <property>
             <description>namedoe 存储永久性的元数据目录列表</description> 
             <name>dfs.namenode.name.dir</name>
-            <value>/home/hadoop/hdfs/name/</value>
+            <value>file:///home/hadoop/hdfs/name/</value>
             <final>true</final>
         </property>
         <property>
             <description>datanode 存放数据块的目录列表</description> 
             <name>dfs.datanode.data.dir</name>
-            <value>/home/hadoop/hdfs/data/</value>
+            <value>file:///home/hadoop/hdfs/data/</value>
             <final>true</final>
         </property>
     </configuration>
@@ -93,7 +93,7 @@
         <property> 
             <description>The address of the applications manager interface in the RM.</description> 
             <name>yarn.resourcemanager.address</name> 
-            <value>namenode:8032</value> 
+            <value>csv-dcos36:8032</value> 
         </property> 
         <property> 
             <name>yarn.nodemanager.aux-services</name> 
@@ -125,30 +125,50 @@
         <property> 
             <description>The address of the scheduler interface.</description> 
             <name>yarn.resourcemanager.scheduler.address</name> 
-            <value>namenode:8030</value> 
+            <value>csv-dcos36:8030</value> 
         </property> 
         <property> 
             <description>The address of the RM web application.</description> 
             <name>yarn.resourcemanager.webapp.address</name> 
-            <value>namenode:8088</value> 
+            <value>csv-dcos36:8088</value> 
         </property> 
         <property> 
             <description>The address of the resource tracker interface.</description> 
             <name>yarn.resourcemanager.resource-tracker.address</name> 
-            <value>namenode:8031</value> 
+            <value>csv-dcos36:8031</value> 
         </property>
         <property>  
             <description>The hostname of the RM.</description>  
             <name>yarn.resourcemanager.hostname</name>  
-            <value>namenode</value>  
+            <value>csv-dcos36</value>  
         </property>
     </configuration>
-#### vi ~/config/hadoop/slaves
-    namenode
-    datanode1
-    datanode2
-#### 优化 namenode 节点命令使用
+#### vi ~/config/hadoop/slaves  
+    csv-dcos36
+    csv-dcos37
+    csv-dcos38
+## 优化 namenode 节点命令使用
     echo "export PATH=$PATH:/data/hadoop-2.8.1/bin/:/data/hadoop-2.8.1/sbin/" >> ~/.bash_profile
     source ~/.bash_profile
-
-
+## 拷贝/home/hadoop/config/hadoop配置目录到其他节点对应目录下
+    scp /home/hadoop/config/hadoop/ csv-dcos37:/home/hadoop/config/
+    scp /home/hadoop/config/hadoop/ csv-dcos38:/home/hadoop/config/
+## 启动集群及测试
+    hadoop namenode -format
+    start-dfs.sh 
+    start-yarn.sh
+## 集群总览
+#### csv-dcos36
+    http://20.26.25.114:50070
+    http://20.26.25.114:8088
+    http://20.26.25.114:8042
+#### csv-dcos37
+    http://20.26.25.115:50075
+    http://20.26.25.115:8042
+#### csv-dcos38
+    http://20.26.25.116:50075
+    http://20.26.25.116:8042
+## 测试用例
+    yarn jar /data/hadoop-2.8.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.1.jar randomwriter random-data
+    访问http://20.26.25.114:8088,查看任务状态信息,如出现一下信息说明正常
+    YarnApplicationState:	RUNNING: AM has registered with RM and started running.
